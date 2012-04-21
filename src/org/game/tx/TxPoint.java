@@ -1,5 +1,6 @@
 package org.game.tx;
 
+import java.awt.Point;
 
 public class TxPoint {
 	private final TxValue<Double> x;
@@ -44,6 +45,12 @@ public class TxPoint {
 		return this;
 	}
 
+	public TxPoint xy(Point p) {
+		this.x.set(p.getX());
+		this.y.set(p.getY());
+		return this;
+	}
+	
 	public void copyTo(TxPoint other) {
 		other.x(other.x());
 		other.y(other.y());

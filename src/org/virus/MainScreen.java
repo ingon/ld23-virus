@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 import org.game.basic.BasicGameScreen;
+import org.virus.proto.LevelProto;
 
 public class MainScreen extends BasicGameScreen<VirusGame> {
 	private static final String GAME_TITLE = "Virus";
@@ -73,9 +74,8 @@ public class MainScreen extends BasicGameScreen<VirusGame> {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		Point p = e.getPoint();
-		System.out.println("Click: " + p);
 		if(startButtonRect.contains(p)) {
-			game.showScreen(new PlayScreen(game));
+			game.showScreen(new LevelScreen(game, new LevelProto()));
 		} else if(exitButtonRect.contains(p)) {
 			System.exit(0);
 		}
