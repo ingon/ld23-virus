@@ -11,9 +11,11 @@ public class Levels {
 	}
 	
 	private static LevelProto makeLevel1() {
-		LevelProto lp = new LevelProto(400, 300, 100, 150);
+		PlayerProto player = new PlayerProto(50, 150, Colors.BLUE);
 		
-		lp.enemies.add(new EnemyProto(300, 150, Colors.BLUE));
+		LevelProto lp = new LevelProto(400, 300, player);
+		
+		lp.enemies.add(new EnemyProto(350, 150, Colors.BLUE));
 		
 		return lp;
 	}

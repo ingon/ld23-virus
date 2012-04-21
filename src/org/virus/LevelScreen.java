@@ -2,8 +2,10 @@ package org.virus;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import org.game.basic.BasicGameScreen;
 import org.game.core.GameObject;
@@ -16,6 +18,7 @@ import org.virus.model.Player;
 import org.virus.model.PlayerCursor;
 import org.virus.model.Playground;
 import org.virus.model.Projectile;
+import org.virus.model.RandomEnemy;
 import org.virus.proto.EnemyProto;
 import org.virus.proto.LevelProto;
 
@@ -48,7 +51,7 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 		
 		this.enemies = new TxSet<Enemy>();
 		for(EnemyProto ep : proto.enemies) {
-			this.enemies.add(new Enemy(this, ep));
+			this.enemies.add(new RandomEnemy(this, ep));
 		}
 	}
 	
@@ -66,12 +69,24 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 		update(ctx, playerFire);
 		update(ctx, enemies);
 		
-		OUTER: for(Projectile p : playerFire) {
-			for(Enemy e : enemies) {
-				if(p.bounds.get().intersects(e.bounds.get())) {
-					enemies.remove(e);
-					playerFire.remove(p);
-					continue OUTER;
+		OUTER:
+		for(Enemy e : enemies) {
+			Rectangle eb = e.roughBounds();
+			List<Rectangle> epb = null;
+			for(Projectile p : playerFire) {
+				Rectangle pp = p.bounds.get();
+				if(pp.intersects(eb)) {
+					if(epb == null)
+						epb = e.preciseBounds();
+					
+					if(intersects(pp, epb)) {
+						if(e.removeColor(p.color)) {
+							if(e.colors.isEmpty())
+								enemies.remove(e);
+						}
+						playerFire.remove(p);
+						continue OUTER;
+					}
 				}
 			}
 		}
@@ -79,6 +94,15 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 		if(enemies.isEmpty()) {
 			game.showNextLevel();
 		}
+	}
+	
+	protected static boolean intersects(Rectangle targetRect, List<Rectangle> rects) {
+		for(Rectangle rect : rects) {
+			if(targetRect.intersects(rect)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override
@@ -105,34 +129,36 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case 87: // W
+		case KeyEvent.VK_W:
 			player.impulse(0, -1);
 			break;
-		case 83: // S
+		case KeyEvent.VK_S:
 			player.impulse(0, 1);
 			break;
-		case 65: // A
+		case KeyEvent.VK_A:
 			player.impulse(-1, 0);
 			break;
-		case 68: // D
+		case KeyEvent.VK_D:
 			player.impulse(1, 0);
 			break;
+		case KeyEvent.VK_SPACE:
+			player.changeColor();
 		}
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case 87: // W
+		case KeyEvent.VK_W:
 			player.impulse(0, 1);
 			break;
-		case 83: // S
+		case KeyEvent.VK_S:
 			player.impulse(0, -1);
 			break;
-		case 65: // A
+		case KeyEvent.VK_A:
 			player.impulse(1, 0);
 			break;
-		case 68: // D
+		case KeyEvent.VK_D:
 			player.impulse(-1, 0);
 			break;
 		}

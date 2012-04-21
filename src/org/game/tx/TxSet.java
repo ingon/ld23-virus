@@ -38,6 +38,21 @@ public class TxSet<T> implements TxCell, Iterable<T> {
 		write = write.removeValue(t);
 	}
 
+	public void removeAll() {
+		if(TxManager.getInstance().isTxReading())
+			throw new RuntimeException("No modifications in read mode");
+		
+		write = new PersistentSet<T>();
+	}
+	
+	public boolean contains(T t) {
+		return TxManager.getInstance().isTxReading() ? read.contains(t) : write.contains(t);
+	}
+	
+	public int size() {
+		return TxManager.getInstance().isTxReading() ? read.size() : write.size();
+	}
+	
 	public boolean isEmpty() {
 		return TxManager.getInstance().isTxReading() ? read.isEmpty() : write.isEmpty();
 	}

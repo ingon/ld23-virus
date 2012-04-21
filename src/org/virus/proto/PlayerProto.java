@@ -1,11 +1,9 @@
 package org.virus.proto;
 
-public class PlayerProto {
-	public final int x;
-	public final int y;
+import org.virus.model.Colors;
 
-	public PlayerProto(int x, int y) {
-		this.x = x;
-		this.y = y;
+public class PlayerProto extends ActiveProto {
+	public PlayerProto(int x, int y, Colors... colors) {
+		super(x, y, colors);
 	}
 }

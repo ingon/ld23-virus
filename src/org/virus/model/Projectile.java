@@ -29,7 +29,7 @@ public class Projectile implements GameObject {
 		bounds = new TxValue<Rectangle>(new Rectangle(position.ix() - 3, position.iy() - 3, 6, 6));
 		
 		impulse = new TxPoint(dx, dy);
-		speed = new TxValue<Double>(1.);
+		speed = new TxValue<Double>(1.5);
 	}
 
 	@Override

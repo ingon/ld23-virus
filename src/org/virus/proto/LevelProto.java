@@ -10,11 +10,11 @@ public class LevelProto {
 	public final PlayerProto player;
 	public final List<EnemyProto> enemies;
 	
-	public LevelProto(int width, int height, int px, int py) {
+	public LevelProto(int width, int height, PlayerProto player) {
 		this.width = width;
 		this.height = height;
 		
-		player = new PlayerProto(px, py);
-		enemies = new ArrayList<EnemyProto>();
+		this.player = player;
+		this.enemies = new ArrayList<EnemyProto>();
 	}
 }
