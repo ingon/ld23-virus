@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 
 import org.game.basic.BasicGameScreen;
 import org.virus.model.PlayerCursor;
-import org.virus.proto.Levels;
 
 public class MainScreen extends BasicGameScreen<VirusGame> {
 	private static final String GAME_TITLE = "Virus";
@@ -82,7 +81,7 @@ public class MainScreen extends BasicGameScreen<VirusGame> {
 	public void mouseReleased(MouseEvent e) {
 		Point p = e.getPoint();
 		if(startButtonRect.contains(p)) {
-			game.showScreen(new LevelScreen(game, Levels.levels[0]));
+			game.showNextLevel();
 		} else if(exitButtonRect.contains(p)) {
 			System.exit(0);
 		}

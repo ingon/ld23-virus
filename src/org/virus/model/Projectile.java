@@ -7,6 +7,7 @@ import org.game.core.GameObject;
 import org.game.core.TimeContext;
 import org.game.tx.TxPoint;
 import org.game.tx.TxValue;
+import org.game.utils.MathUtils;
 import org.virus.LevelScreen;
 
 public class Projectile implements GameObject {
@@ -35,6 +36,10 @@ public class Projectile implements GameObject {
 	public void update(TimeContext ctx) {
 		position.ax(impulse.x() * speed.get());
 		position.ay(impulse.y() * speed.get());
+		
+		if(! (MathUtils.inBound(position.x(), screen.playground.width) && MathUtils.inBound(position.y(), screen.playground.height))) {
+			screen.playerFire.remove(this);
+		}
 		
 		bounds.set(new Rectangle(position.ix() - 3, position.iy() - 3, 6, 6));
 	}

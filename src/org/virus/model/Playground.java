@@ -13,13 +13,19 @@ public class Playground implements GameObject {
 	public final LevelScreen screen;
 	public final BufferedImage image;
 	
+	public final int width;
+	public final int height;
+	
 	public Playground(LevelScreen screen, LevelProto lp) {
 		this.screen = screen;
 		
-		image = new BufferedImage(lp.width, lp.height, BufferedImage.TYPE_INT_ARGB);
+		this.width = lp.width;
+		this.height = lp.height;
+		
+		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = image.createGraphics();
 		g.setColor(new Color(0xF0F0F0));
-		g.fillRect(0, 0, lp.width, lp.height);
+		g.fillRect(0, 0, width, height);
 	}
 
 	@Override

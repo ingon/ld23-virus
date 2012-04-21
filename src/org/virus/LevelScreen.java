@@ -75,6 +75,10 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 				}
 			}
 		}
+		
+		if(enemies.isEmpty()) {
+			game.showNextLevel();
+		}
 	}
 	
 	@Override
