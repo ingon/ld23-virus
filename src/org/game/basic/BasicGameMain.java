@@ -3,12 +3,11 @@ package org.game.basic;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics2D;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JApplet;
 
@@ -38,28 +37,9 @@ public class BasicGameMain extends JApplet {
 		painter = new PaintThread((Graphics2D) getGraphics(), game);
 		painter.start();
 		
-		addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				game.keyPressed(e);
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				game.keyReleased(e);
-			}
-		});
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				game.mousePressed(e);
-			}
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				game.mouseReleased(e);
-			}
-		});
+		addKeyListener(game);
+		addMouseListener(game);
+		addMouseMotionListener(game);
 	}
 	
 	public static void run(BasicGame game, String name) {
@@ -78,6 +58,10 @@ public class BasicGameMain extends JApplet {
         f.add(escape);
         f.pack();
         f.setLocationRelativeTo(null);
+        
+        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        f.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "Empty"));
+        
         f.setVisible(true);
         escape.start();
 	}

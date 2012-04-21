@@ -6,6 +6,10 @@ public class TxPoint {
 	private final TxValue<Double> x;
 	private final TxValue<Double> y;
 	
+	public TxPoint(Point p) {
+		this(p.getX(), p.getY());
+	}
+	
 	public TxPoint(double x, double y) {
 		this.x = new TxValue<Double>(x);
 		this.y = new TxValue<Double>(y);
@@ -48,6 +52,12 @@ public class TxPoint {
 	public TxPoint xy(Point p) {
 		this.x.set(p.getX());
 		this.y.set(p.getY());
+		return this;
+	}
+	
+	public TxPoint xy(double x, double y) {
+		this.x.set(x);
+		this.y.set(y);
 		return this;
 	}
 	

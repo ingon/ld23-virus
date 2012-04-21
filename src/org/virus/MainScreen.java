@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 import org.game.basic.BasicGameScreen;
+import org.virus.model.PlayerCursor;
 import org.virus.proto.LevelProto;
 
 public class MainScreen extends BasicGameScreen<VirusGame> {
@@ -21,9 +22,13 @@ public class MainScreen extends BasicGameScreen<VirusGame> {
 	private Font buttonFont;
 	private Rectangle startButtonRect;
 	private Rectangle exitButtonRect;
+	
+	public final PlayerCursor playerTarget;
 
 	public MainScreen(VirusGame game) {
 		super(game);
+		
+		this.playerTarget = new PlayerCursor();
 	}
 	
 	@Override
@@ -69,6 +74,8 @@ public class MainScreen extends BasicGameScreen<VirusGame> {
 		g.drawString(GAME_EXIT, exitButtonRect.x + 10, exitButtonRect.y + exitButtonRect.height - 8);
 		
 		g.setFont(originalFont);
+		
+		playerTarget.paint(g);
 	}
 	
 	@Override
@@ -79,5 +86,20 @@ public class MainScreen extends BasicGameScreen<VirusGame> {
 		} else if(exitButtonRect.contains(p)) {
 			System.exit(0);
 		}
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		playerTarget.move(e.getX(), e.getY());
+	}
+	
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		playerTarget.move(e.getX(), e.getY());
+	}
+	
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		playerTarget.move(e.getX(), e.getY());
 	}
 }
