@@ -27,7 +27,8 @@ public class Player extends ActiveObject<PlayerProto> {
 	
 	@Override
 	protected Color shadowColor() {
-		return color.get().shadow;
+//		return color.get().shadow;
+		return Colors.PLAYER_SHADOW;
 	}
 	
 	public void addMove(Direction direction) {

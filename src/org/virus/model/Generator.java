@@ -7,25 +7,22 @@ import java.util.List;
 import org.game.core.GameObject;
 import org.game.core.TimeContext;
 import org.virus.PlayScreen;
-import org.virus.proto.EnemyGeneratorProto;
-import org.virus.proto.EnemyProto;
+import org.virus.proto.GeneratorProto;
 
-public class EnemyGenerator implements GameObject {
+public abstract class Generator<EGP extends GeneratorProto> implements GameObject {
 	
 	public final PlayScreen screen;
-	public final EnemyGeneratorProto proto;
+	public final EGP proto;
 	
 	public final List<Long> times;
-	public final List<EnemyProto> enemies;
 
 	private long beginTime = -1;
 	
-	public EnemyGenerator(PlayScreen screen, EnemyGeneratorProto proto) {
+	public Generator(PlayScreen screen, EGP proto) {
 		this.screen = screen;
 		this.proto = proto;
 		
 		this.times = new ArrayList<Long>(proto.times);
-		this.enemies = new ArrayList<EnemyProto>(proto.enemies);
 	}
 	
 	@Override
@@ -37,13 +34,15 @@ public class EnemyGenerator implements GameObject {
 		long dist = ctx.time - beginTime;
 		while(! times.isEmpty() && dist >= times.get(0)) {
 			times.remove(0);
-			screen.spawn(enemies.remove(0));
+			executeNext();
 		}
 		
 		if(times.isEmpty()) {
 			screen.enemyGenerators.remove(this);
 		}
 	}
+	
+	protected abstract void executeNext();
 
 	@Override
 	public void paint(Graphics2D g) {

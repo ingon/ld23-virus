@@ -19,7 +19,7 @@ public class Background implements GameObject {
 
 	@Override
 	public void paint(Graphics2D g) {
-		g.setColor(screen.player.shadowColor());
+		g.setColor(screen.player.color.get().shadow);
 		g.fillRect(0, 0, 800, 600);
 	}
 }

@@ -6,8 +6,6 @@ import org.virus.proto.EnemyProto;
 public abstract class Enemy<E extends EnemyProto> extends ActiveObject<E> {
 	public Enemy(PlayScreen screen, E proto) {
 		super(screen, proto);
-		
-		speed.set(proto.speed);
 	}
 
 	public boolean colorHit(Colors color) {

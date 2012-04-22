@@ -10,7 +10,7 @@ public class LevelProto {
 	public final PlayerProto player;
 	
 	public final List<EnemyProto> enemies;
-	public final List<EnemyGeneratorProto> enemyGenerators;
+	public final List<GeneratorProto> generators;
 	
 	public LevelProto(int width, int height, PlayerProto player) {
 		this.width = width;
@@ -19,6 +19,6 @@ public class LevelProto {
 		this.player = player;
 		
 		this.enemies = new ArrayList<EnemyProto>();
-		this.enemyGenerators = new ArrayList<EnemyGeneratorProto>();
+		this.generators = new ArrayList<GeneratorProto>();
 	}
 }

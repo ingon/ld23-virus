@@ -1,5 +1,7 @@
 package org.virus.model;
 
+import java.awt.Rectangle;
+
 import org.game.core.GameObject;
 import org.game.core.TimeContext;
 import org.game.tx.TxPoint;
@@ -26,8 +28,12 @@ public abstract class MovingObject implements GameObject {
 		double dx = impulse.x() * speed.get();
 		double dy = impulse.y() * speed.get();
 
-		double px = MathUtils.bound(position.x() + dx, screen.proto.width);
-		double py = MathUtils.bound(position.y() + dy, screen.proto.height);
+		Rectangle bounds = roughBounds();
+		int hwidth = bounds.width / 2;
+		int hheight = bounds.height / 2;
+		
+		double px = MathUtils.bound(position.x() + dx, hwidth, screen.proto.width - hwidth);
+		double py = MathUtils.bound(position.y() + dy, hheight, screen.proto.height - hheight);
 
 		double ax = px - position.x();
 		double ay = py - position.y();
@@ -40,4 +46,6 @@ public abstract class MovingObject implements GameObject {
 	
 	protected void updateConnected(double ax, double ay) {
 	}
+	
+	protected abstract Rectangle roughBounds();
 }

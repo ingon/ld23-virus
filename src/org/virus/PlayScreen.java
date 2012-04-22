@@ -15,18 +15,20 @@ import org.game.tx.TxSet;
 import org.virus.model.Background;
 import org.virus.model.Direction;
 import org.virus.model.Enemy;
-import org.virus.model.EnemyGenerator;
+import org.virus.model.Generator;
 import org.virus.model.FollowEnemy;
 import org.virus.model.Player;
 import org.virus.model.PlayerCursor;
 import org.virus.model.Playground;
 import org.virus.model.Projectile;
 import org.virus.model.RandomEnemy;
-import org.virus.proto.EnemyGeneratorProto;
+import org.virus.model.FixedGenerator;
+import org.virus.proto.GeneratorProto;
 import org.virus.proto.EnemyProto;
 import org.virus.proto.FollowEnemyProto;
 import org.virus.proto.LevelProto;
 import org.virus.proto.RandomEnemyProto;
+import org.virus.proto.FixedGeneratorProto;
 
 public abstract class PlayScreen extends BasicGameScreen<VirusGame> {
 	public final LevelProto proto;
@@ -41,7 +43,7 @@ public abstract class PlayScreen extends BasicGameScreen<VirusGame> {
 	public final TxSet<Projectile> playerFire;
 
 	public final TxSet<Enemy<?>> enemies;
-	public final TxSet<EnemyGenerator> enemyGenerators;
+	public final TxSet<Generator<?>> enemyGenerators;
 
 	public PlayScreen(VirusGame game, LevelProto proto) {
 		super(game);
@@ -62,8 +64,8 @@ public abstract class PlayScreen extends BasicGameScreen<VirusGame> {
 			this.enemies.add(createEnemy(ep));
 		}
 		
-		this.enemyGenerators = new TxSet<EnemyGenerator>();
-		for(EnemyGeneratorProto egp : proto.enemyGenerators) {
+		this.enemyGenerators = new TxSet<Generator<?>>();
+		for(GeneratorProto egp : proto.generators) {
 			this.enemyGenerators.add(createEnemyGenerator(egp));
 		}
 	}
@@ -78,8 +80,12 @@ public abstract class PlayScreen extends BasicGameScreen<VirusGame> {
 		}
 	}
 	
-	private EnemyGenerator createEnemyGenerator(EnemyGeneratorProto proto) {
-		return new EnemyGenerator(this, proto);
+	private Generator<?> createEnemyGenerator(GeneratorProto proto) {
+		if(FixedGenerator.class.equals(proto.type)) {
+			return new FixedGenerator(this, (FixedGeneratorProto) proto);
+		} else {
+			throw new RuntimeException("Unknown type");
+		}
 	}
 	
 	public void spawn(EnemyProto proto) {

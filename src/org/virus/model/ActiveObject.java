@@ -30,9 +30,9 @@ public abstract class ActiveObject<P extends ActiveProto> extends MovingObject {
 		}
 	}
 	
-	public static final ActiveSizes SMALL_COUNT = new ActiveSizes(20, 4, 5);
-	public static final ActiveSizes MID_COUNT = new ActiveSizes(16, 2, 5);
-	public static final ActiveSizes BIG_COUNT = new ActiveSizes(12, 2, 5);
+	public static final ActiveSizes SMALL_COUNT = new ActiveSizes(24, 4, 5);
+	public static final ActiveSizes MID_COUNT = new ActiveSizes(20, 4, 5);
+	public static final ActiveSizes BIG_COUNT = new ActiveSizes(16, 2, 5);
 
 	public final P proto;
 	
@@ -40,7 +40,7 @@ public abstract class ActiveObject<P extends ActiveProto> extends MovingObject {
 	public final TxSet<TxPoint> partials;
 	
 	public ActiveObject(PlayScreen screen, P proto) {
-		super(screen, proto.x, proto.y, 1.);
+		super(screen, proto.x, proto.y, proto.speed);
 		this.proto = proto;
 		
 		colors = new TxSet<Colors>();
@@ -186,7 +186,7 @@ public abstract class ActiveObject<P extends ActiveProto> extends MovingObject {
 			return SMALL_COUNT;
 		case 2: case 3: case 4:
 			return MID_COUNT;
-		case 5: case 6: case 7: case 8:
+		case 5: case 6: case 7: case 8: case 9:
 			return BIG_COUNT;
 		default:
 			throw new RuntimeException("Unknown size");

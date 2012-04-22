@@ -1,11 +1,12 @@
 package org.virus.model;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import org.game.core.GameObject;
 import org.game.core.TimeContext;
+import org.game.utils.ImageUtils;
 import org.virus.PlayScreen;
 import org.virus.proto.LevelProto;
 
@@ -22,10 +23,11 @@ public class Playground implements GameObject {
 		this.width = lp.width;
 		this.height = lp.height;
 		
+		Image backgroundImage = ImageUtils.load("img/background.png");
+		
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = image.createGraphics();
-		g.setColor(new Color(0xF0F0F0));
-		g.fillRect(0, 0, width, height);
+		g.drawImage(backgroundImage, 0, 0, null);
 	}
 
 	@Override
