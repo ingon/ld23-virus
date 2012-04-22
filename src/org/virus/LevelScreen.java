@@ -15,12 +15,14 @@ import org.game.tx.TxSet;
 import org.virus.model.Background;
 import org.virus.model.Direction;
 import org.virus.model.Enemy;
+import org.virus.model.EnemyGenerator;
 import org.virus.model.FollowEnemy;
 import org.virus.model.Player;
 import org.virus.model.PlayerCursor;
 import org.virus.model.Playground;
 import org.virus.model.Projectile;
 import org.virus.model.RandomEnemy;
+import org.virus.proto.EnemyGeneratorProto;
 import org.virus.proto.EnemyProto;
 import org.virus.proto.FollowEnemyProto;
 import org.virus.proto.LevelProto;
@@ -39,6 +41,7 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 	public final TxSet<Projectile> playerFire;
 	
 	public final TxSet<Enemy<?>> enemies;
+	public final TxSet<EnemyGenerator> enemyGenerators;
 	
 	public LevelScreen(VirusGame game, LevelProto proto) {
 		super(game);
@@ -57,6 +60,11 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 		for(EnemyProto ep : proto.enemies) {
 			this.enemies.add(createEnemy(ep));
 		}
+		
+		this.enemyGenerators = new TxSet<EnemyGenerator>();
+		for(EnemyGeneratorProto egp : proto.enemyGenerators) {
+			this.enemyGenerators.add(new EnemyGenerator(this, egp));
+		}
 	}
 	
 	private Enemy<?> createEnemy(EnemyProto proto) {
@@ -67,6 +75,11 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 		} else {
 			throw new RuntimeException("Unknown type");
 		}
+	}
+	
+	public void spawn(EnemyProto proto) {
+		Enemy<?> enemy = createEnemy(proto);
+		this.enemies.add(enemy);
 	}
 	
 	public void updateView(TxPoint position) {
@@ -82,6 +95,7 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 		
 		update(ctx, playerFire);
 		update(ctx, enemies);
+		update(ctx, enemyGenerators);
 		
 		OUTER:
 		for(Enemy<?> e : enemies) {
@@ -105,7 +119,7 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 			}
 		}
 		
-		if(enemies.isEmpty()) {
+		if(enemies.isEmpty() && enemyGenerators.isEmpty()) {
 			game.showNextLevel();
 		}
 	}

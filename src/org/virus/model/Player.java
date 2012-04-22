@@ -34,7 +34,6 @@ public class Player extends ActiveObject<PlayerProto> {
 		if(! currentDirections[num]) {
 			currentDirections[num] = true;
 			impulse.axy(direction.normal);
-			System.out.println("AImpulse: " + impulse);
 		}
 	}
 
@@ -43,7 +42,6 @@ public class Player extends ActiveObject<PlayerProto> {
 		if(currentDirections[num]) {
 			currentDirections[num] = false;
 			impulse.axy(direction.reverse);
-			System.out.println("RImpulse: " + impulse);
 		}
 	}
 
