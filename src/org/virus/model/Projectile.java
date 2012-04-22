@@ -16,7 +16,7 @@ public class Projectile extends MovingObject {
 	public final TxValue<Rectangle> bounds;
 	
 	public Projectile(PlayScreen screen, Colors color, int px, int py, double dx, double dy) {
-		super(screen, px, py, 7);
+		super(screen, Position.Constructos.fixed(px, py), 7);
 		impulse.xy(dx, dy);
 		
 		this.color = color;

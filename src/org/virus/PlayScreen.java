@@ -15,20 +15,16 @@ import org.game.tx.TxSet;
 import org.virus.model.Background;
 import org.virus.model.Direction;
 import org.virus.model.Enemy;
+import org.virus.model.FixedGenerator;
 import org.virus.model.Generator;
-import org.virus.model.FollowEnemy;
 import org.virus.model.Player;
 import org.virus.model.PlayerCursor;
 import org.virus.model.Playground;
 import org.virus.model.Projectile;
-import org.virus.model.RandomEnemy;
-import org.virus.model.FixedGenerator;
-import org.virus.proto.GeneratorProto;
 import org.virus.proto.EnemyProto;
-import org.virus.proto.FollowEnemyProto;
-import org.virus.proto.LevelProto;
-import org.virus.proto.RandomEnemyProto;
 import org.virus.proto.FixedGeneratorProto;
+import org.virus.proto.GeneratorProto;
+import org.virus.proto.LevelProto;
 
 public abstract class PlayScreen extends BasicGameScreen<VirusGame> {
 	public final LevelProto proto;
@@ -42,7 +38,7 @@ public abstract class PlayScreen extends BasicGameScreen<VirusGame> {
 	public final PlayerCursor playerTarget;
 	public final TxSet<Projectile> playerFire;
 
-	public final TxSet<Enemy<?>> enemies;
+	public final TxSet<Enemy> enemies;
 	public final TxSet<Generator<?>> enemyGenerators;
 
 	public PlayScreen(VirusGame game, LevelProto proto) {
@@ -59,7 +55,7 @@ public abstract class PlayScreen extends BasicGameScreen<VirusGame> {
 		this.playerTarget = new PlayerCursor();
 		this.playerFire = new TxSet<Projectile>();
 		
-		this.enemies = new TxSet<Enemy<?>>();
+		this.enemies = new TxSet<Enemy>();
 		for(EnemyProto ep : proto.enemies) {
 			this.enemies.add(createEnemy(ep));
 		}
@@ -70,14 +66,8 @@ public abstract class PlayScreen extends BasicGameScreen<VirusGame> {
 		}
 	}
 
-	private Enemy<?> createEnemy(EnemyProto proto) {
-		if(RandomEnemy.class.equals(proto.type)) {
-			return new RandomEnemy(this, (RandomEnemyProto) proto);
-		} else if(FollowEnemy.class.equals(proto.type)) {
-			return new FollowEnemy(this, (FollowEnemyProto) proto);
-		} else {
-			throw new RuntimeException("Unknown type");
-		}
+	private Enemy createEnemy(EnemyProto proto) {
+		return new Enemy(this, proto);
 	}
 	
 	private Generator<?> createEnemyGenerator(GeneratorProto proto) {
@@ -89,7 +79,7 @@ public abstract class PlayScreen extends BasicGameScreen<VirusGame> {
 	}
 	
 	public void spawn(EnemyProto proto) {
-		Enemy<?> enemy = createEnemy(proto);
+		Enemy enemy = createEnemy(proto);
 		this.enemies.add(enemy);
 	}
 	
@@ -112,7 +102,7 @@ public abstract class PlayScreen extends BasicGameScreen<VirusGame> {
 		List<Rectangle> ppb = null;
 		
 		OUTER:
-		for(Enemy<?> e : enemies) {
+		for(Enemy e : enemies) {
 			Rectangle eb = e.roughBounds();
 			List<Rectangle> epb = null;
 			for(Projectile p : playerFire) {

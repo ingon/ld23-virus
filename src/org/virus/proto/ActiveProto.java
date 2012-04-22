@@ -1,16 +1,15 @@
 package org.virus.proto;
 
 import org.virus.model.Colors;
+import org.virus.model.Position;
 
 public class ActiveProto {
-	public final int x;
-	public final int y;
+	public final Position position;
 	public final double speed;
 	public final Colors[] colors;
 	
-	public ActiveProto(int x, int y, double speed, Colors[] colors) {
-		this.x = x;
-		this.y = y;
+	public ActiveProto(Position position, double speed, Colors[] colors) {
+		this.position = position;
 		this.speed = speed;
 		this.colors = colors;
 	}

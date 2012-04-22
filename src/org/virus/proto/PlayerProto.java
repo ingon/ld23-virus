@@ -1,6 +1,7 @@
 package org.virus.proto;
 
 import org.virus.model.Colors;
+import org.virus.model.Position;
 
 public class PlayerProto extends ActiveProto {
 	public PlayerProto(int x, int y, Colors... colors) {
@@ -8,6 +9,6 @@ public class PlayerProto extends ActiveProto {
 	}
 	
 	public PlayerProto(int x, int y, double speed, Colors... colors) {
-		super(x, y, speed, colors);
+		super(Position.Constructos.fixed(x, y), speed, colors);
 	}
 }

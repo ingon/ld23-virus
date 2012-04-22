@@ -40,7 +40,7 @@ public abstract class ActiveObject<P extends ActiveProto> extends MovingObject {
 	public final TxSet<TxPoint> partials;
 	
 	public ActiveObject(PlayScreen screen, P proto) {
-		super(screen, proto.x, proto.y, proto.speed);
+		super(screen, proto.position, proto.speed);
 		this.proto = proto;
 		
 		colors = new TxSet<Colors>();
