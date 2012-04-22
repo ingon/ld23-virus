@@ -9,6 +9,7 @@ import org.virus.proto.PlayerProto;
 
 public class Player extends ActiveObject<PlayerProto> {
 	public final TxValue<Colors> color;
+	private boolean[] currentDirections = new boolean[Direction.values().length];
 	
 	public Player(LevelScreen screen, PlayerProto proto) {
 		super(screen, proto);
@@ -28,8 +29,22 @@ public class Player extends ActiveObject<PlayerProto> {
 		return color.get().shadow;
 	}
 	
-	public void impulse(int x, int y) {
-		impulse.ax(x).ay(y);
+	public void addMove(Direction direction) {
+		int num = direction.ordinal();
+		if(! currentDirections[num]) {
+			currentDirections[num] = true;
+			impulse.axy(direction.normal);
+			System.out.println("AImpulse: " + impulse);
+		}
+	}
+
+	public void removeMove(Direction direction) {
+		int num = direction.ordinal();
+		if(currentDirections[num]) {
+			currentDirections[num] = false;
+			impulse.axy(direction.reverse);
+			System.out.println("RImpulse: " + impulse);
+		}
 	}
 
 	public void fire(int x, int y) {

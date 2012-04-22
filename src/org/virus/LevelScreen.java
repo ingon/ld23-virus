@@ -13,6 +13,7 @@ import org.game.core.TimeContext;
 import org.game.tx.TxPoint;
 import org.game.tx.TxSet;
 import org.virus.model.Background;
+import org.virus.model.Direction;
 import org.virus.model.Enemy;
 import org.virus.model.FollowEnemy;
 import org.virus.model.Player;
@@ -143,20 +144,16 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_W:
-			System.out.println("KP: " + "w");
-			player.impulse(0, -1);
+			player.addMove(Direction.NORTH);
 			break;
 		case KeyEvent.VK_S:
-			System.out.println("KP: " + "s");
-			player.impulse(0, 1);
+			player.addMove(Direction.SOUTH);
 			break;
 		case KeyEvent.VK_A:
-			System.out.println("KP: " + "a");
-			player.impulse(-1, 0);
+			player.addMove(Direction.WEST);
 			break;
 		case KeyEvent.VK_D:
-			System.out.println("KP: " + "d");
-			player.impulse(1, 0);
+			player.addMove(Direction.EAST);
 			break;
 		case KeyEvent.VK_SPACE:
 			player.changeColor();
@@ -167,20 +164,16 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_W:
-			System.out.println("KR: " + "w");
-			player.impulse(0, 1);
+			player.removeMove(Direction.NORTH);
 			break;
 		case KeyEvent.VK_S:
-			System.out.println("KR: " + "s");
-			player.impulse(0, -1);
+			player.removeMove(Direction.SOUTH);
 			break;
 		case KeyEvent.VK_A:
-			System.out.println("KR: " + "a");
-			player.impulse(1, 0);
+			player.removeMove(Direction.WEST);
 			break;
 		case KeyEvent.VK_D:
-			System.out.println("KR: " + "d");
-			player.impulse(-1, 0);
+			player.removeMove(Direction.EAST);
 			break;
 		}
 	}

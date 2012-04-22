@@ -49,6 +49,12 @@ public class TxPoint {
 		return this;
 	}
 
+	public TxPoint axy(Point p) {
+		this.x.set(this.x() + p.getX());
+		this.y.set(this.y() + p.getY());
+		return this;
+	}
+	
 	public TxPoint xy(Point p) {
 		this.x.set(p.getX());
 		this.y.set(p.getY());
