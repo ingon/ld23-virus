@@ -18,13 +18,33 @@ public class RandomEnemy extends Enemy<RandomEnemyProto> {
 	@Override
 	public void update(TimeContext ctx) {
 		if(directionChangeTime == -1 || directionChangeTime + proto.directionKeepTime < ctx.time) {
-			int rx = rand.nextInt(21) - 10;
-			int ry = rand.nextInt(21) - 10;
-			double nt = Math.abs(rx) + Math.abs(ry);
-			if(nt != 0)
-				impulse.xy(rx / nt, ry / nt);
+			int screenPartWidth = screen.playground.width / 10;
+			int screenPartHeight = screen.playground.height / 10;
 			
-			directionChangeTime = ctx.time;
+			int rx = 0;
+			int ry = 0;
+			
+			if(position.ix() < screenPartWidth) {
+				rx = rand.nextInt(11);
+			} else if(position.ix() > screen.playground.width - screenPartWidth) {
+				rx = rand.nextInt(11) - 10;
+			} else {
+				rx = rand.nextInt(21) - 10;
+			}
+			
+			if(position.iy() < screenPartHeight) {
+				ry = rand.nextInt(11);
+			} else if(position.iy() > screen.playground.height - screenPartHeight) {
+				ry = rand.nextInt(11) - 10;
+			} else {
+				ry = rand.nextInt(21) - 10;
+			}
+			
+			double nt = Math.abs(rx) + Math.abs(ry);
+			if(nt != 0) {
+				impulse.xy(rx / nt, ry / nt);
+				directionChangeTime = ctx.time;
+			}
 		}
 		
 		super.update(ctx);

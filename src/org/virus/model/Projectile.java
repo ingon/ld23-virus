@@ -13,7 +13,7 @@ public class Projectile extends MovingObject {
 	public final TxValue<Rectangle> bounds;
 	
 	public Projectile(LevelScreen screen, Colors color, int px, int py, double dx, double dy) {
-		super(screen, px, py, 2.5);
+		super(screen, px, py, 3);
 		impulse.xy(dx, dy);
 		
 		this.color = color;

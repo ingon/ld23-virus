@@ -3,7 +3,7 @@ package org.virus.proto;
 import org.virus.model.Colors;
 
 public class Levels {
-	public static final int LEVELS_COUNT = 4;
+	public static final int LEVELS_COUNT = 5;
 	public static final LevelProto[] levels = new LevelProto[LEVELS_COUNT];
 	
 	static {
@@ -11,6 +11,7 @@ public class Levels {
 		levels[1] = makeLevel2();
 		levels[2] = makeLevel3();
 		levels[3] = makeLevel4();
+		levels[4] = makeLevel5();
 	}
 	
 	private static LevelProto makeLevel1() {
@@ -52,11 +53,35 @@ public class Levels {
 		
 		EnemyGeneratorProto gen = new EnemyGeneratorProto();
 		gen.add(100, new RandomEnemyProto(300, 150, 1.4, 1500, Colors.BLUE));
-		gen.add(500, new RandomEnemyProto(300, 150, 1.4, 1500, Colors.RED));
-		gen.add(1000, new RandomEnemyProto(300, 150, 1.4, 1500, Colors.BLUE));
-		gen.add(1500, new RandomEnemyProto(300, 150, 1.4, 1500, Colors.RED));
-		gen.add(2500, new RandomEnemyProto(300, 150, 1.4, 1500, Colors.BLUE, Colors.RED));
+		gen.add(500, new RandomEnemyProto(300, 150, 1.3, 1200, Colors.RED));
+		gen.add(1000, new RandomEnemyProto(300, 150, 1.5, 1300, Colors.BLUE));
+		gen.add(1500, new RandomEnemyProto(300, 150, 1.5, 1500, Colors.RED));
+		gen.add(2500, new RandomEnemyProto(300, 150, 1.3, 1400, Colors.BLUE, Colors.RED));
 		lp.enemyGenerators.add(gen);
+
+		return lp;
+	}
+
+	private static LevelProto makeLevel5() {
+		PlayerProto player = new PlayerProto(300, 150, Colors.BLUE, Colors.RED);
+		
+		LevelProto lp = new LevelProto(600, 300, player);
+		
+		EnemyGeneratorProto gen1 = new EnemyGeneratorProto();
+		gen1.add(100, new RandomEnemyProto(150, 150, 1.4, 1500, Colors.BLUE));
+		gen1.add(500, new RandomEnemyProto(150, 150, 1.3, 1200, Colors.RED));
+		gen1.add(1000, new RandomEnemyProto(150, 150, 1.5, 1300, Colors.BLUE));
+		gen1.add(1500, new RandomEnemyProto(150, 150, 1.5, 1500, Colors.RED));
+		gen1.add(2500, new RandomEnemyProto(150, 150, 1.3, 1400, Colors.BLUE, Colors.RED));
+		lp.enemyGenerators.add(gen1);
+
+		EnemyGeneratorProto gen2 = new EnemyGeneratorProto();
+		gen2.add(100, new RandomEnemyProto(450, 150, 1.4, 1500, Colors.BLUE));
+		gen2.add(500, new RandomEnemyProto(450, 150, 1.3, 1200, Colors.RED));
+		gen2.add(1000, new RandomEnemyProto(450, 150, 1.5, 1300, Colors.BLUE));
+		gen2.add(1500, new RandomEnemyProto(450, 150, 1.5, 1500, Colors.RED));
+		gen2.add(2500, new RandomEnemyProto(450, 150, 1.3, 1400, Colors.BLUE, Colors.RED));
+		lp.enemyGenerators.add(gen2);
 
 		return lp;
 	}
