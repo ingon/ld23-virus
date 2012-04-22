@@ -7,16 +7,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.game.core.GameObject;
-import org.game.core.TimeContext;
 import org.game.tx.TxPoint;
 import org.game.tx.TxSet;
-import org.game.tx.TxValue;
-import org.game.utils.MathUtils;
 import org.virus.LevelScreen;
 import org.virus.proto.ActiveProto;
 
-public abstract class ActiveObject<P extends ActiveProto> implements GameObject {
+public abstract class ActiveObject<P extends ActiveProto> extends MovingObject {
 	
 	public static class ActiveSizes {
 		public final int extRect;
@@ -38,30 +34,21 @@ public abstract class ActiveObject<P extends ActiveProto> implements GameObject 
 	public static final ActiveSizes MID_COUNT = new ActiveSizes(16, 2, 5);
 	public static final ActiveSizes BIG_COUNT = new ActiveSizes(12, 2, 5);
 
-	public final LevelScreen screen;
 	public final P proto;
 	
 	public final TxSet<Colors> colors;
-	public final TxPoint position;
 	public final TxSet<TxPoint> partials;
 	
-	public final TxPoint impulse;
-	public final TxValue<Double> speed;
-
 	public ActiveObject(LevelScreen screen, P proto) {
-		this.screen = screen;
+		super(screen, proto.x, proto.y, 1.);
 		this.proto = proto;
 		
 		colors = new TxSet<Colors>();
 		for(Colors c : proto.colors) {
 			colors.add(c);
 		}
-		position = new TxPoint(proto.x, proto.y);
 		partials = new TxSet<TxPoint>();
 		initPartials();
-		
-		impulse = new TxPoint(0, 0);
-		speed = new TxValue<Double>(1.);
 	}
 
 	protected void initPartials() {
@@ -147,19 +134,7 @@ public abstract class ActiveObject<P extends ActiveProto> implements GameObject 
 	}
 	
 	@Override
-	public void update(TimeContext ctx) {
-		double dx = impulse.x() * speed.get();
-		double dy = impulse.y() * speed.get();
-
-		double px = MathUtils.bound(position.x() + dx, screen.proto.width);
-		double py = MathUtils.bound(position.y() + dy, screen.proto.height);
-
-		double ax = px - position.x();
-		double ay = py - position.y();
-
-		position.ax(ax);
-		position.ay(ay);
-		
+	protected void updateConnected(double ax, double ay) {
 		for(TxPoint p : partials) {
 			p.ax(ax);
 			p.ay(ay);
