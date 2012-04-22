@@ -13,6 +13,7 @@ import org.game.core.TimeContext;
 import org.game.tx.TxPoint;
 import org.game.tx.TxSet;
 import org.virus.model.Background;
+import org.virus.model.CallbackGenerator;
 import org.virus.model.Direction;
 import org.virus.model.Enemy;
 import org.virus.model.FixedGenerator;
@@ -21,6 +22,7 @@ import org.virus.model.Player;
 import org.virus.model.PlayerCursor;
 import org.virus.model.Playground;
 import org.virus.model.Projectile;
+import org.virus.proto.CallbackGeneratorProto;
 import org.virus.proto.EnemyProto;
 import org.virus.proto.FixedGeneratorProto;
 import org.virus.proto.GeneratorProto;
@@ -73,6 +75,8 @@ public abstract class PlayScreen extends BasicGameScreen<VirusGame> {
 	private Generator<?> createEnemyGenerator(GeneratorProto proto) {
 		if(FixedGenerator.class.equals(proto.type)) {
 			return new FixedGenerator(this, (FixedGeneratorProto) proto);
+		} else if(CallbackGenerator.class.equals(proto.type)) {
+			return new CallbackGenerator(this, (CallbackGeneratorProto) proto);
 		} else {
 			throw new RuntimeException("Unknown type");
 		}

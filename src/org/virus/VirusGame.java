@@ -28,7 +28,7 @@ public class VirusGame extends BasicGame {
 		if(currentLevel < Levels.LEVELS_COUNT) {
 			LevelProto lp = Levels.levels[currentLevel];
 			LevelScreen levelScreen = new LevelScreen(this, lp);
-			showScreen(new PreparePlayScreen(this, levelScreen, "Level " + (currentLevel + 1) + " will begin in ", 3000));
+			showScreen(new PreparePlayScreen(this, levelScreen, "Tutorial level " + (currentLevel + 1) + " will begin in ", 3000));
 		} else {
 			showScreen(new CreditsScreen(this));
 		}
@@ -41,7 +41,7 @@ public class VirusGame extends BasicGame {
 	public void replayLevel() {
 		LevelProto lp = Levels.levels[currentLevel];
 		LevelScreen levelScreen = new LevelScreen(this, lp);
-		showScreen(new PreparePlayScreen(this, levelScreen, "Died. Level " + (currentLevel + 1) + " will begin in ", 3000));
+		showScreen(new PreparePlayScreen(this, levelScreen, "Died. Tutorial level " + (currentLevel + 1) + " will begin in ", 3000));
 	}
 	
 	public static void main(String[] args) {

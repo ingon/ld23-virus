@@ -15,7 +15,7 @@ public class Player extends ActiveObject<PlayerProto> {
 	public Player(PlayScreen screen, PlayerProto proto) {
 		super(screen, proto);
 		
-		color = new TxValue<Colors>(Colors.BLUE);
+		color = new TxValue<Colors>(proto.colors[0]);
 	}
 
 	@Override

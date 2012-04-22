@@ -13,14 +13,14 @@ import org.game.tx.TxValue;
 public class PreparePlayScreen extends BasicGameScreen<VirusGame> {
 	private static final Font TEXT_FONT = new Font("Verdana", Font.PLAIN, 28);
 	
-	public final LevelScreen screen;
+	public final PlayScreen screen;
 	public final String text;
 	public final long showTime;
 	
 	private TxValue<Integer> timeLeft;
 	private long beginTime = -1;
 	
-	public PreparePlayScreen(VirusGame game, LevelScreen screen, String text, long showTime) {
+	public PreparePlayScreen(VirusGame game, PlayScreen screen, String text, long showTime) {
 		super(game);
 		
 		this.screen = screen;

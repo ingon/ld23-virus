@@ -13,7 +13,7 @@ import org.virus.model.PlayerCursor;
 public class MainScreen extends BasicGameScreen<VirusGame> {
 	private static final String GAME_TITLE = "Virus";
 	
-	private static final String[] BUTTONS = new String[] {"Levels", "Survival", "Exit"};
+	private static final String[] BUTTONS = new String[] {"Survival", "Tutorial", "Exit"};
 	
 	private Font titleFont;
 	private Point titlePosition;
@@ -82,10 +82,10 @@ public class MainScreen extends BasicGameScreen<VirusGame> {
 		Point p = e.getPoint();
 		switch (findButton(p)) {
 		case 0:
-			game.showFirstLevel();
+			game.startSurvival();
 			break;
 		case 1:
-			game.startSurvival();
+			game.showFirstLevel();
 			break;
 		case 2:
 			System.exit(0);

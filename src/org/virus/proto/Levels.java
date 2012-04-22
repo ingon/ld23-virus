@@ -1,5 +1,7 @@
 package org.virus.proto;
 
+import org.virus.model.Callback;
+import org.virus.model.CallbackGenerator;
 import org.virus.model.Colors;
 import org.virus.model.EnemyMover;
 import org.virus.model.Position;
@@ -20,12 +22,16 @@ public class Levels {
 	}
 	
 	private static LevelProto makeSurvival() {
-		PlayerProto player = new PlayerProto(380, 280, 2, Colors.values());
+		PlayerProto player = new PlayerProto(380, 280, 2, Colors.BLUE);
 		
 		LevelProto lp = new LevelProto(760, 560, player);
 		
 		lp.enemies.add(new EnemyProto(EnemyMover.Kinds.RANDOM, Position.Constructos.fixed(350, 150), 1.2, 1500, Colors.BLUE));
 		lp.enemies.add(new EnemyProto(EnemyMover.Kinds.RANDOM, Position.Constructos.fixed(350, 350), 1.2, 1500, Colors.BLUE, Colors.RED));
+		
+		CallbackGeneratorProto cgp = new CallbackGeneratorProto(CallbackGenerator.class);
+		cgp.add(10, Callback.Constructors.addColor(Colors.RED));
+		lp.generators.add(cgp);
 		
 		return lp;
 	}
