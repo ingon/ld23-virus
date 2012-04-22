@@ -40,7 +40,8 @@ public class Player extends ActiveObject<PlayerProto> {
 		double dy = py - position.y();
 
 		double nt = Math.abs(dx) + Math.abs(dy);
-		screen.playerFire.add(new Projectile(screen, color.get(), position.ix(), position.iy(), dx / nt, dy / nt));
+		if(nt != 0)
+			screen.playerFire.add(new Projectile(screen, color.get(), position.ix(), position.iy(), dx / nt, dy / nt));
 	}
 	
 	public void changeColor() {
