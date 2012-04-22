@@ -3,7 +3,13 @@ package org.virus.proto;
 import org.virus.model.Colors;
 
 public class EnemyProto extends ActiveProto {
-	public EnemyProto(int x, int y, Colors... colors) {
+	public final Class<?> type;
+	public final double speed;
+	
+	public EnemyProto(Class<?> type, int x, int y, double speed, Colors... colors) {
 		super(x, y, colors);
+		
+		this.type = type;
+		this.speed = speed;
 	}
 }

@@ -14,13 +14,16 @@ import org.game.tx.TxPoint;
 import org.game.tx.TxSet;
 import org.virus.model.Background;
 import org.virus.model.Enemy;
+import org.virus.model.FollowEnemy;
 import org.virus.model.Player;
 import org.virus.model.PlayerCursor;
 import org.virus.model.Playground;
 import org.virus.model.Projectile;
 import org.virus.model.RandomEnemy;
 import org.virus.proto.EnemyProto;
+import org.virus.proto.FollowEnemyProto;
 import org.virus.proto.LevelProto;
+import org.virus.proto.RandomEnemyProto;
 
 public class LevelScreen extends BasicGameScreen<VirusGame> {
 	public final LevelProto proto;
@@ -34,7 +37,7 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 	public final PlayerCursor playerTarget;
 	public final TxSet<Projectile> playerFire;
 	
-	public final TxSet<Enemy> enemies;
+	public final TxSet<Enemy<?>> enemies;
 	
 	public LevelScreen(VirusGame game, LevelProto proto) {
 		super(game);
@@ -49,9 +52,19 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 		this.playerTarget = new PlayerCursor();
 		this.playerFire = new TxSet<Projectile>();
 		
-		this.enemies = new TxSet<Enemy>();
+		this.enemies = new TxSet<Enemy<?>>();
 		for(EnemyProto ep : proto.enemies) {
-			this.enemies.add(new RandomEnemy(this, ep));
+			this.enemies.add(createEnemy(ep));
+		}
+	}
+	
+	private Enemy<?> createEnemy(EnemyProto proto) {
+		if(RandomEnemy.class.equals(proto.type)) {
+			return new RandomEnemy(this, (RandomEnemyProto) proto);
+		} else if(FollowEnemy.class.equals(proto.type)) {
+			return new FollowEnemy(this, (FollowEnemyProto) proto);
+		} else {
+			throw new RuntimeException("Unknown type");
 		}
 	}
 	
@@ -70,7 +83,7 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 		update(ctx, enemies);
 		
 		OUTER:
-		for(Enemy e : enemies) {
+		for(Enemy<?> e : enemies) {
 			Rectangle eb = e.roughBounds();
 			List<Rectangle> epb = null;
 			for(Projectile p : playerFire) {
@@ -80,7 +93,7 @@ public class LevelScreen extends BasicGameScreen<VirusGame> {
 						epb = e.preciseBounds();
 					
 					if(intersects(pp, epb)) {
-						if(e.removeColor(p.color)) {
+						if(e.colorHit(p.color)) {
 							if(e.colors.isEmpty())
 								enemies.remove(e);
 						}
