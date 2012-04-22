@@ -4,14 +4,15 @@ import java.awt.Color;
 
 import org.game.core.TimeContext;
 import org.game.tx.TxValue;
-import org.virus.LevelScreen;
+import org.virus.PlayScreen;
 import org.virus.proto.PlayerProto;
 
 public class Player extends ActiveObject<PlayerProto> {
 	public final TxValue<Colors> color;
 	private boolean[] currentDirections = new boolean[Direction.values().length];
+	private boolean dead = false;
 	
-	public Player(LevelScreen screen, PlayerProto proto) {
+	public Player(PlayScreen screen, PlayerProto proto) {
 		super(screen, proto);
 		
 		color = new TxValue<Colors>(Colors.BLUE);
@@ -71,5 +72,13 @@ public class Player extends ActiveObject<PlayerProto> {
 				color.set(c);
 			}
 		}
+	}
+
+	public void die() {
+		dead = true;
+	}
+	
+	public boolean dead() {
+		return dead;
 	}
 }

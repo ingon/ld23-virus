@@ -3,13 +3,13 @@ package org.virus.model;
 import java.awt.Color;
 
 import org.game.core.TimeContext;
-import org.virus.LevelScreen;
+import org.virus.PlayScreen;
 import org.virus.proto.FollowEnemyProto;
 
 public class FollowEnemy extends Enemy<FollowEnemyProto> {
 	private long directionChangeTime = -1;
 
-	public FollowEnemy(LevelScreen screen, FollowEnemyProto proto) {
+	public FollowEnemy(PlayScreen screen, FollowEnemyProto proto) {
 		super(screen, proto);
 	}
 

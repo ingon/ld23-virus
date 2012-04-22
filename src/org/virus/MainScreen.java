@@ -12,15 +12,14 @@ import org.virus.model.PlayerCursor;
 
 public class MainScreen extends BasicGameScreen<VirusGame> {
 	private static final String GAME_TITLE = "Virus";
-	private static final String GAME_START = "Start";
-	private static final String GAME_EXIT = "Exit";
+	
+	private static final String[] BUTTONS = new String[] {"Levels", "Survival", "Exit"};
 	
 	private Font titleFont;
 	private Point titlePosition;
 	
 	private Font buttonFont;
-	private Rectangle startButtonRect;
-	private Rectangle exitButtonRect;
+	private Rectangle[] buttons = new Rectangle[BUTTONS.length];
 	
 	public final PlayerCursor playerTarget;
 
@@ -39,38 +38,39 @@ public class MainScreen extends BasicGameScreen<VirusGame> {
 			titlePosition = new Point((800 - titleRect.width) / 2, (600 - titleRect.height) / 2);
 			
 			buttonFont = new Font("Verdana", Font.PLAIN, 28);
-			
-			startButtonRect = buttonFont.getStringBounds(GAME_START, g.getFontRenderContext()).getBounds();
-			startButtonRect.setLocation((800 - startButtonRect.width) / 2, titlePosition.y + titleRect.height + 20);
-			startButtonRect.x -= 10;
-			startButtonRect.width += 20;
-			
-			exitButtonRect = buttonFont.getStringBounds(GAME_EXIT, g.getFontRenderContext()).getBounds();
-			exitButtonRect.setLocation((800 - exitButtonRect.width) / 2, startButtonRect.y + startButtonRect.height + 20);
-			exitButtonRect.x -= 10;
-			exitButtonRect.width += 20;
-			
-			if(startButtonRect.getWidth() > exitButtonRect.getWidth()) {
-				exitButtonRect.x = startButtonRect.x;
-				exitButtonRect.width = startButtonRect.width;
-			} else {
-				startButtonRect.x = exitButtonRect.x;
-				startButtonRect.width = exitButtonRect.width;
+
+			int maxWidth = -1;
+			for(int i = 0; i < BUTTONS.length; i++) {
+				buttons[i] = buttonFont.getStringBounds(BUTTONS[i], g.getFontRenderContext()).getBounds();
+				buttons[i].width += 20;
+				if(buttons[i].width > maxWidth) {
+					maxWidth = buttons[i].width;
+				}
+			}
+
+			int initialY = titlePosition.y + titleRect.height + 20;
+			for(int i = 0; i < buttons.length; i++) {
+				buttons[i].width = maxWidth;
+				buttons[i].setLocation((800 - buttons[i].width) / 2, initialY);
+				
+				initialY = buttons[i].y + buttons[i].height + 20;
 			}
 		}
 		
 		Font originalFont = g.getFont();
-		g.setColor(Color.RED);
+		g.setColor(new Color(255, 32, 32));
 		g.setFont(titleFont);
 		g.drawString(GAME_TITLE, titlePosition.x, titlePosition.y);
 		
 		g.setFont(buttonFont);
-		g.fillRoundRect(startButtonRect.x, startButtonRect.y, startButtonRect.width, startButtonRect.height, 8, 8);
-		g.fillRoundRect(exitButtonRect.x, exitButtonRect.y, exitButtonRect.width, exitButtonRect.height, 8, 8);
 		
-		g.setColor(Color.BLUE);
-		g.drawString(GAME_START, startButtonRect.x + 10, startButtonRect.y + startButtonRect.height - 8);
-		g.drawString(GAME_EXIT, exitButtonRect.x + 10, exitButtonRect.y + exitButtonRect.height - 8);
+		for(int i = 0; i < buttons.length; i++) {
+			g.setColor(new Color(255, 32, 32));
+			g.fillRoundRect(buttons[i].x, buttons[i].y, buttons[i].width, buttons[i].height, 8, 8);
+			
+			g.setColor(new Color(32, 32, 255));
+			g.drawString(BUTTONS[i], buttons[i].x + 10, buttons[i].y + buttons[i].height - 8);
+		}
 		
 		g.setFont(originalFont);
 		
@@ -80,13 +80,30 @@ public class MainScreen extends BasicGameScreen<VirusGame> {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		Point p = e.getPoint();
-		if(startButtonRect.contains(p)) {
-			game.showNextLevel();
-		} else if(exitButtonRect.contains(p)) {
+		switch (findButton(p)) {
+		case 0:
+			game.showFirstLevel();
+			break;
+		case 1:
+			game.startSurvival();
+			break;
+		case 2:
 			System.exit(0);
+			break;
+		default:
+			break;
 		}
 	}
 
+	private int findButton(Point p) {
+		for(int i = 0; i < buttons.length; i++) {
+			if(buttons[i].contains(p)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	@Override
 	public void mouseExited(MouseEvent e) {
 		playerTarget.move(e.getX(), e.getY());

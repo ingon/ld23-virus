@@ -6,13 +6,13 @@ import java.util.List;
 
 import org.game.core.GameObject;
 import org.game.core.TimeContext;
-import org.virus.LevelScreen;
+import org.virus.PlayScreen;
 import org.virus.proto.EnemyGeneratorProto;
 import org.virus.proto.EnemyProto;
 
 public class EnemyGenerator implements GameObject {
 	
-	public final LevelScreen screen;
+	public final PlayScreen screen;
 	public final EnemyGeneratorProto proto;
 	
 	public final List<Long> times;
@@ -20,7 +20,7 @@ public class EnemyGenerator implements GameObject {
 
 	private long beginTime = -1;
 	
-	public EnemyGenerator(LevelScreen screen, EnemyGeneratorProto proto) {
+	public EnemyGenerator(PlayScreen screen, EnemyGeneratorProto proto) {
 		this.screen = screen;
 		this.proto = proto;
 		

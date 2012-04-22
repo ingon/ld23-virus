@@ -1,10 +1,10 @@
 package org.virus.model;
 
-import org.virus.LevelScreen;
+import org.virus.PlayScreen;
 import org.virus.proto.EnemyProto;
 
 public abstract class Enemy<E extends EnemyProto> extends ActiveObject<E> {
-	public Enemy(LevelScreen screen, E proto) {
+	public Enemy(PlayScreen screen, E proto) {
 		super(screen, proto);
 		
 		speed.set(proto.speed);

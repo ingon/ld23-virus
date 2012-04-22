@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.game.tx.TxPoint;
 import org.game.tx.TxSet;
-import org.virus.LevelScreen;
+import org.virus.PlayScreen;
 import org.virus.proto.ActiveProto;
 
 public abstract class ActiveObject<P extends ActiveProto> extends MovingObject {
@@ -39,7 +39,7 @@ public abstract class ActiveObject<P extends ActiveProto> extends MovingObject {
 	public final TxSet<Colors> colors;
 	public final TxSet<TxPoint> partials;
 	
-	public ActiveObject(LevelScreen screen, P proto) {
+	public ActiveObject(PlayScreen screen, P proto) {
 		super(screen, proto.x, proto.y, 1.);
 		this.proto = proto;
 		

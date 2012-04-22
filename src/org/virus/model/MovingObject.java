@@ -5,16 +5,16 @@ import org.game.core.TimeContext;
 import org.game.tx.TxPoint;
 import org.game.tx.TxValue;
 import org.game.utils.MathUtils;
-import org.virus.LevelScreen;
+import org.virus.PlayScreen;
 
 public abstract class MovingObject implements GameObject {
-	public final LevelScreen screen;
+	public final PlayScreen screen;
 
 	public final TxPoint position;
 	public final TxPoint impulse;
 	public final TxValue<Double> speed;
 
-	public MovingObject(LevelScreen screen, int px, int py, double speed) {
+	public MovingObject(PlayScreen screen, int px, int py, double speed) {
 		this.screen = screen;
 		this.position = new TxPoint(px, py);
 		this.impulse = new TxPoint(0, 0);

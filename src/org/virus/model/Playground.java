@@ -6,17 +6,17 @@ import java.awt.image.BufferedImage;
 
 import org.game.core.GameObject;
 import org.game.core.TimeContext;
-import org.virus.LevelScreen;
+import org.virus.PlayScreen;
 import org.virus.proto.LevelProto;
 
 public class Playground implements GameObject {
-	public final LevelScreen screen;
+	public final PlayScreen screen;
 	public final BufferedImage image;
 	
 	public final int width;
 	public final int height;
 	
-	public Playground(LevelScreen screen, LevelProto lp) {
+	public Playground(PlayScreen screen, LevelProto lp) {
 		this.screen = screen;
 		
 		this.width = lp.width;

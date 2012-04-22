@@ -14,6 +14,15 @@ public class VirusGame extends BasicGame {
 		return new MainScreen(this);
 	}
 	
+	public void showMain() {
+		showScreen(new MainScreen(this));
+	}
+	
+	public void showFirstLevel() {
+		currentLevel = -1;
+		showNextLevel();
+	}
+	
 	public void showNextLevel() {
 		currentLevel++;
 		if(currentLevel < Levels.LEVELS_COUNT) {
@@ -23,6 +32,10 @@ public class VirusGame extends BasicGame {
 		} else {
 			showScreen(new CreditsScreen(this));
 		}
+	}
+	
+	public void startSurvival() {
+		showScreen(new SurvivalScreen(this));
 	}
 	
 	public void replayLevel() {

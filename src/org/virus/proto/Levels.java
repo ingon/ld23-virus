@@ -3,8 +3,9 @@ package org.virus.proto;
 import org.virus.model.Colors;
 
 public class Levels {
-	public static final int LEVELS_COUNT = 5;
+	public static final int LEVELS_COUNT = 6;
 	public static final LevelProto[] levels = new LevelProto[LEVELS_COUNT];
+	public static final LevelProto survival;
 	
 	static {
 		levels[0] = makeLevel1();
@@ -12,8 +13,21 @@ public class Levels {
 		levels[2] = makeLevel3();
 		levels[3] = makeLevel4();
 		levels[4] = makeLevel5();
+		levels[5] = makeLevel6();
+		
+		survival = makeSurvival();
 	}
 	
+	private static LevelProto makeSurvival() {
+		PlayerProto player = new PlayerProto(380, 280, Colors.BLUE, Colors.RED);
+		
+		LevelProto lp = new LevelProto(760, 560, player);
+		
+		lp.enemies.add(new RandomEnemyProto(350, 150, 1.2, 1500, Colors.BLUE));
+		
+		return lp;
+	}
+
 	private static LevelProto makeLevel1() {
 		PlayerProto player = new PlayerProto(50, 150, Colors.BLUE);
 		
@@ -61,8 +75,18 @@ public class Levels {
 
 		return lp;
 	}
-
+	
 	private static LevelProto makeLevel5() {
+		PlayerProto player = new PlayerProto(50, 150, Colors.BLUE);
+		
+		LevelProto lp = new LevelProto(400, 300, player);
+		
+		lp.enemies.add(new FollowEnemyProto(350, 150, 1.2, 500, Colors.BLUE));
+
+		return lp;
+	}
+
+	private static LevelProto makeLevel6() {
 		PlayerProto player = new PlayerProto(300, 150, Colors.BLUE, Colors.RED);
 		
 		LevelProto lp = new LevelProto(600, 300, player);

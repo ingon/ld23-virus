@@ -6,13 +6,13 @@ import java.awt.Rectangle;
 import org.game.core.TimeContext;
 import org.game.tx.TxValue;
 import org.game.utils.MathUtils;
-import org.virus.LevelScreen;
+import org.virus.PlayScreen;
 
 public class Projectile extends MovingObject {
 	public final Colors color;
 	public final TxValue<Rectangle> bounds;
 	
-	public Projectile(LevelScreen screen, Colors color, int px, int py, double dx, double dy) {
+	public Projectile(PlayScreen screen, Colors color, int px, int py, double dx, double dy) {
 		super(screen, px, py, 3);
 		impulse.xy(dx, dy);
 		

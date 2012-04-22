@@ -4,14 +4,14 @@ import java.awt.Color;
 import java.util.Random;
 
 import org.game.core.TimeContext;
-import org.virus.LevelScreen;
+import org.virus.PlayScreen;
 import org.virus.proto.RandomEnemyProto;
 
 public class RandomEnemy extends Enemy<RandomEnemyProto> {
 	private final Random rand = new Random();
 	private long directionChangeTime = -1;
 	
-	public RandomEnemy(LevelScreen screen, RandomEnemyProto proto) {
+	public RandomEnemy(PlayScreen screen, RandomEnemyProto proto) {
 		super(screen, proto);
 	}
 

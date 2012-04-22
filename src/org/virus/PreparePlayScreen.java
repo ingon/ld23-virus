@@ -3,6 +3,7 @@ package org.virus;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 
 import org.game.basic.BasicGameScreen;
@@ -55,5 +56,14 @@ public class PreparePlayScreen extends BasicGameScreen<VirusGame> {
 		g.setColor(Color.WHITE);
 		g.setFont(TEXT_FONT);
 		g.drawString(currentText, (int) ((800 - textBounds.getWidth()) / 2), 300);
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_ESCAPE:
+			game.showMain();
+			break;
+		}
 	}
 }
