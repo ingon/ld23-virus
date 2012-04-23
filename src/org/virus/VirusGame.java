@@ -17,7 +17,11 @@ public class VirusGame extends BasicGame {
 	public void showMain() {
 		showScreen(new MainScreen(this));
 	}
-	
+
+	public void showMain(String text) {
+		showScreen(new MainScreen(this, text));
+	}
+
 	public void showFirstLevel() {
 		currentLevel = -1;
 		showNextLevel();
@@ -30,7 +34,7 @@ public class VirusGame extends BasicGame {
 			LevelScreen levelScreen = new LevelScreen(this, lp);
 			showScreen(new PreparePlayScreen(this, levelScreen, "Tutorial level " + (currentLevel + 1) + " will begin in ", 3000));
 		} else {
-			showScreen(new CreditsScreen(this));
+			showMain();
 		}
 	}
 	

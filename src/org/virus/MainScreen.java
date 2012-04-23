@@ -11,7 +11,7 @@ import org.game.basic.BasicGameScreen;
 import org.virus.model.PlayerCursor;
 
 public class MainScreen extends BasicGameScreen<VirusGame> {
-	private static final String GAME_TITLE = "Virus";
+	private static final String GAME_TITLE = "Virus Wars (LD23 by Ingon)";
 	
 	private static final String[] BUTTONS = new String[] {"Survival", "Tutorial", "Exit"};
 	
@@ -21,14 +21,23 @@ public class MainScreen extends BasicGameScreen<VirusGame> {
 	private Font buttonFont;
 	private Rectangle[] buttons = new Rectangle[BUTTONS.length];
 	
+	private Font textFont;
+	private final String text;
+	private Point textPosition;
+	
 	public final PlayerCursor playerTarget;
 
 	public MainScreen(VirusGame game) {
+		this(game, null);
+	}
+	
+	public MainScreen(VirusGame game, String text) {
 		super(game);
+		this.text = text;
 		
 		this.playerTarget = new PlayerCursor();
 	}
-	
+
 	@Override
 	public void paint(Graphics2D g) {
 		if(titleFont == null) {
@@ -36,6 +45,12 @@ public class MainScreen extends BasicGameScreen<VirusGame> {
 			
 			Rectangle titleRect = titleFont.getStringBounds(GAME_TITLE, g.getFontRenderContext()).getBounds();
 			titlePosition = new Point((800 - titleRect.width) / 2, (600 - titleRect.height) / 2);
+			
+			textFont = new Font("Verdana", Font.PLAIN, 32);
+			if(text != null) {
+				Rectangle textRect = textFont.getStringBounds(text, g.getFontRenderContext()).getBounds();
+				textPosition = new Point((800 - textRect.width) / 2, (600 - textRect.height) / 2 - 100);
+			}
 			
 			buttonFont = new Font("Verdana", Font.PLAIN, 28);
 
@@ -58,6 +73,13 @@ public class MainScreen extends BasicGameScreen<VirusGame> {
 		}
 		
 		Font originalFont = g.getFont();
+		
+		if(text != null) {
+			g.setColor(Color.WHITE);
+			g.setFont(textFont);
+			g.drawString(text, textPosition.x, textPosition.y);
+		}
+		
 		g.setColor(new Color(255, 32, 32));
 		g.setFont(titleFont);
 		g.drawString(GAME_TITLE, titlePosition.x, titlePosition.y);

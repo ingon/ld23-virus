@@ -16,8 +16,7 @@ public enum Colors {
 	
 	public static final Color PLAYER_SHADOW = new Color(128, 128, 128, 128);
 	public static final Color RANDOM_SHADOW = new Color(128, 255, 128, 128);
-	public static final Color FOLLOW_SHADOW = new Color(128, 128, 255, 128);
-	public static final Color HIDE_SHADOW = new Color(255, 128, 128, 128);
+	public static final Color FOLLOW_SHADOW = new Color(255, 128, 128, 128);
 	
 	public final Color main;
 	public final Color shadow;

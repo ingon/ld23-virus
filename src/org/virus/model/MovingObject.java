@@ -18,7 +18,7 @@ public abstract class MovingObject implements GameObject {
 
 	public MovingObject(PlayScreen screen, Position position, double speed) {
 		this.screen = screen;
-		this.position = new TxPoint(position.generate());
+		this.position = new TxPoint(position.generate(screen));
 		this.impulse = new TxPoint(0, 0);
 		this.speed = new TxValue<Double>(speed);
 	}

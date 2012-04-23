@@ -27,7 +27,6 @@ public class Player extends ActiveObject<PlayerProto> {
 	
 	@Override
 	protected Color shadowColor() {
-//		return color.get().shadow;
 		return Colors.PLAYER_SHADOW;
 	}
 	
@@ -72,6 +71,13 @@ public class Player extends ActiveObject<PlayerProto> {
 			if(colors.contains(c)) {
 				color.set(c);
 			}
+		}
+	}
+	
+	public void addColor(Colors color) {
+		if(! colors.contains(color)) {
+			colors.add(color);
+			initPartials();
 		}
 	}
 

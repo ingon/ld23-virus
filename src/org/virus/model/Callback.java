@@ -1,6 +1,7 @@
 package org.virus.model;
 
 import org.virus.PlayScreen;
+import org.virus.proto.EnemyProto;
 
 public interface Callback {
 	public void execute(PlayScreen screen);
@@ -10,7 +11,16 @@ public interface Callback {
 			return new Callback() {
 				@Override
 				public void execute(PlayScreen screen) {
-					screen.player.colors.add(c);
+					screen.player.addColor(c);
+				}
+			};
+		}
+		
+		public static Callback addEnemy(final EnemyProto proto) {
+			return new Callback() {
+				@Override
+				public void execute(PlayScreen screen) {
+					screen.spawn(proto);
 				}
 			};
 		}
