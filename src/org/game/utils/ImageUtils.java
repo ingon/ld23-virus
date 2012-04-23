@@ -14,4 +14,12 @@ public class ImageUtils {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public static Image loadRes(String name) {
+		try {
+			return ImageIO.read(ImageUtils.class.getClassLoader().getResourceAsStream(name));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

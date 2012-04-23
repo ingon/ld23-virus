@@ -23,7 +23,7 @@ public class Playground implements GameObject {
 		this.width = lp.width;
 		this.height = lp.height;
 		
-		Image backgroundImage = ImageUtils.load("img/background.png");
+		Image backgroundImage = ImageUtils.loadRes("background.png");
 		
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = image.createGraphics();
